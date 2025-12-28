@@ -182,7 +182,7 @@ export function PosterPreview({ data, onPosterReady, onExport }: PosterPreviewPr
 export async function exportPoster(node: HTMLElement): Promise<string> {
   const options = {
     pixelRatio: 2,
-    backgroundColor: null,
+    backgroundColor: undefined,
     style: {
       transform: "scale(1)",
       transformOrigin: "top left",
