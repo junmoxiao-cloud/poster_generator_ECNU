@@ -16,13 +16,23 @@ export function PosterPreview({ data, onPosterReady, onExport }: PosterPreviewPr
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState<string>("");
 
+  const generateQrCode = useCallback(async (url: string) => {
+    try {
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+      setQrCodeUrl(qrUrl);
+    } catch {
+      console.error("二维码生成失败");
+      setQrCodeUrl("");
+    }
+  }, []);
+
   useEffect(() => {
     if (data.joinUrl) {
       generateQrCode(data.joinUrl);
     } else {
       setQrCodeUrl("");
     }
-  }, [data.joinUrl]);
+  }, [data.joinUrl, generateQrCode]);
 
   useEffect(() => {
     if (posterRef.current && onPosterReady) {
@@ -167,16 +177,6 @@ export function PosterPreview({ data, onPosterReady, onExport }: PosterPreviewPr
       )}
     </div>
   );
-}
-
-async function generateQrCode(url: string): Promise<void> {
-  try {
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
-    setQrCodeUrl(qrCodeUrl);
-  } catch {
-    console.error("二维码生成失败");
-    setQrCodeUrl("");
-  }
 }
 
 export async function exportPoster(node: HTMLElement): Promise<string> {
