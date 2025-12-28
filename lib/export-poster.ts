@@ -3,15 +3,14 @@ import { toPng, toJpeg } from "html-to-image";
 export interface ExportOptions {
   pixelRatio?: number;
   quality?: number;
-  backgroundColor?: string | null;
+  backgroundColor?: string;
 }
 
 export async function exportPoster(node: HTMLElement, options: ExportOptions = {}): Promise<string> {
-  const { pixelRatio = 2, quality = 0.95, backgroundColor = null } = options;
+  const { pixelRatio = 2, quality = 0.95 } = options;
   
   const baseOptions = {
     pixelRatio,
-    backgroundColor,
     style: {
       transform: "scale(1)",
       transformOrigin: "top left",
