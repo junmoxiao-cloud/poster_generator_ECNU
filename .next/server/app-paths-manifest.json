@@ -1,8 +1,4 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/p/[id]/page": "app/p/[id]/page.js",
-  "/api/posters/[id]/route": "app/api/posters/[id]/route.js",
-  "/api/posters/route": "app/api/posters/route.js",
-  "/page": "app/page.js",
-  "/api/posters/image/route": "app/api/posters/image/route.js"
+  "/page": "app/page.js"
 }

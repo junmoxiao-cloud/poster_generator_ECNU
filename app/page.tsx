@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import { PosterForm, PosterFormData } from "@/components/PosterForm";
 import { PosterPreview } from "@/components/PosterPreview";
 import { Button } from "@/components/ui/Button";
 import { exportPoster, downloadBase64Image } from "@/lib/export-poster";
+import { templateGenerate } from "@/lib/generate-copies";
 
 const initialFormData: PosterFormData = {
   title: "",
@@ -71,44 +72,38 @@ export default function Home() {
         console.error("海报导出失败:", error);
       }
       
-      const response = await fetch("/api/posters", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: formData.title,
-          time: formData.time,
-          location: formData.location,
-          organizer: formData.organizer,
-          description: formData.description,
-          join_url: formData.joinUrl,
-          is_ecnu: formData.isEcnU,
-        }),
+      const copiesData = templateGenerate({
+        title: formData.title,
+        time: formData.time,
+        location: formData.location,
+        organizer: formData.organizer,
+        description: formData.description,
+        join_url: formData.joinUrl,
+        is_ecnu: formData.isEcnU,
       });
       
-      if (!response.ok) {
-        throw new Error("创建失败");
-      }
+      setCopies(copiesData);
       
-      const result = await response.json();
-      setPosterUrl(`${window.location.origin}/p/${result.id}`);
-      setCopies(result.copies);
+      const shareData = {
+        title: formData.title,
+        time: formData.time,
+        location: formData.location,
+        organizer: formData.organizer,
+        description: formData.description,
+        join_url: formData.joinUrl,
+        is_ecnu: formData.isEcnU,
+        copies: copiesData,
+      };
+      
+      const encodedData = btoa(encodeURIComponent(JSON.stringify(shareData)));
+      const url = `${window.location.origin}/p?data=${encodedData}`;
+      setPosterUrl(url);
       
       if (base64) {
-        try {
-          await fetch("/api/posters/image", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              id: result.id,
-              poster_base64: base64,
-            }),
-          });
-        } catch (error) {
-          console.error("保存海报图片失败:", error);
-        }
+        downloadBase64Image(base64, `poster-${Date.now()}.png`);
       }
     } catch (error) {
-      console.error("提交失败:", error);
+      console.error("生成失败:", error);
       alert("生成失败，请重试");
     } finally {
       setIsSubmitting(false);
