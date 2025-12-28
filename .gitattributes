@@ -1,0 +1,18 @@
+# Git 换行符配置
+# 防止 Windows 下的 LF/CRLF 警告
+
+* text=auto
+
+# 确保特定文件使用 LF 换行符
+*.ts     text eol=lf
+*.tsx    text eol=lf
+*.js     text eol=lf
+*.json   text eol=lf
+*.css    text eol=lf
+*.md     text eol=lf
+
+# 二进制文件不转换
+*.png    binary
+*.jpg    binary
+*.ico    binary
+*.woff   binary

@@ -1,0 +1,8 @@
+{
+  "name": "poster-generator",
+  "version": "1.0.0",
+  "description": "校园海报生成器 - 一键生成社团风海报，支持多平台宣发",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
