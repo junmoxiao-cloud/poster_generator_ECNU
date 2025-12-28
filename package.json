@@ -1,8 +1,33 @@
 {
   "name": "poster-generator",
   "version": "1.0.0",
-  "description": "校园海报生成器 - 一键生成社团风海报，支持多平台宣发",
-  "engines": {
-    "node": ">=18.0.0"
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "^18",
+    "react-dom": "^18",
+    "nanoid": "^5.0.7",
+    "html-to-image": "^1.11.11",
+    "qrcode": "^1.5.3",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/qrcode": "^1.5.5",
+    "typescript": "^5",
+    "tailwindcss": "^3.4.1",
+    "postcss": "^8",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5"
   }
 }
